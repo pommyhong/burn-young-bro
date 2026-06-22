@@ -442,21 +442,16 @@ document.getElementById('savePngBtn').addEventListener('click', async () => {
     await document.fonts.ready;
     const cert = document.getElementById('certificate');
 
-    // Temporarily unhide cert for html2canvas
+    // Temporarily unhide cert + hide doctor row for export
     const wrap = document.getElementById('certRevealWrap');
     wrap.style.clipPath = 'none';
     wrap.style.transform = 'none';
     wrap.style.animation = 'none';
-
-    // Calculate exact scale so cert fills 1000×1250 — no double-scaling quality loss
-    const OUT_W = 1000, OUT_H = 1250, PAD = 48;
-    const exactScale = Math.min(
-      (OUT_W - PAD * 2) / cert.offsetWidth,
-      (OUT_H - PAD * 2) / cert.offsetHeight
-    );
+    const doctorRow = cert.querySelector('.cert-doctor-row');
+    if (doctorRow) doctorRow.style.display = 'none';
 
     const certCanvas = await html2canvas(cert, {
-      scale: exactScale,
+      scale: 2.5,
       useCORS: true,
       allowTaint: true,
       backgroundColor: '#EDE8D6',
@@ -466,14 +461,9 @@ document.getElementById('savePngBtn').addEventListener('click', async () => {
     wrap.style.clipPath = '';
     wrap.style.transform = '';
     wrap.style.animation = '';
+    if (doctorRow) doctorRow.style.display = '';
 
-    const exportC = document.createElement('canvas');
-    exportC.width = OUT_W; exportC.height = OUT_H;
-    const ectx = exportC.getContext('2d');
-    ectx.fillStyle = '#EDE8D6';
-    ectx.fillRect(0, 0, OUT_W, OUT_H);
-    ectx.drawImage(certCanvas, (OUT_W - certCanvas.width) / 2, (OUT_H - certCanvas.height) / 2);
-    const dataUrl = exportC.toDataURL('image/png');
+    const dataUrl = certCanvas.toDataURL('image/png');
     const isIOS = /iPhone|iPad|iPod/i.test(navigator.userAgent);
     if (isIOS) {
       // iOS Safari doesn't support link.download — open in new tab, user long-press to save
