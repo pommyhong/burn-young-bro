@@ -448,8 +448,15 @@ document.getElementById('savePngBtn').addEventListener('click', async () => {
     wrap.style.transform = 'none';
     wrap.style.animation = 'none';
 
+    // Calculate exact scale so cert fills 1000×1250 — no double-scaling quality loss
+    const OUT_W = 1000, OUT_H = 1250, PAD = 48;
+    const exactScale = Math.min(
+      (OUT_W - PAD * 2) / cert.offsetWidth,
+      (OUT_H - PAD * 2) / cert.offsetHeight
+    );
+
     const certCanvas = await html2canvas(cert, {
-      scale: 3,
+      scale: exactScale,
       useCORS: true,
       allowTaint: true,
       backgroundColor: '#EDE8D6',
@@ -460,18 +467,12 @@ document.getElementById('savePngBtn').addEventListener('click', async () => {
     wrap.style.transform = '';
     wrap.style.animation = '';
 
-    // 1000×1250 export with dark background
-    const OUT_W = 1000, OUT_H = 1250;
     const exportC = document.createElement('canvas');
     exportC.width = OUT_W; exportC.height = OUT_H;
     const ectx = exportC.getContext('2d');
-    ectx.fillStyle = '#111111';
+    ectx.fillStyle = '#EDE8D6';
     ectx.fillRect(0, 0, OUT_W, OUT_H);
-    const pad = 36;
-    const sc  = Math.min((OUT_W - pad*2) / certCanvas.width, (OUT_H - pad*2) / certCanvas.height);
-    const dw  = certCanvas.width  * sc;
-    const dh  = certCanvas.height * sc;
-    ectx.drawImage(certCanvas, (OUT_W - dw) / 2, (OUT_H - dh) / 2, dw, dh);
+    ectx.drawImage(certCanvas, (OUT_W - certCanvas.width) / 2, (OUT_H - certCanvas.height) / 2);
     const dataUrl = exportC.toDataURL('image/png');
     const isIOS = /iPhone|iPad|iPod/i.test(navigator.userAgent);
     if (isIOS) {
