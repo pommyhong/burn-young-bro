@@ -8,6 +8,8 @@ const LEVELS = [
   {
     en: "MILDLY TOASTED",
     th: "เริ่มเกรียมนิดๆ",
+    header: "ระยะสุกแรก",
+    body: "ยังพอฟื้นได้ — ถ้าหยุดได้ตอนนี้",
     range: [18, 31],
     symptoms: [
       "ตอบ 'fine' ทุกคน ทั้งที่ไม่ fine เลย",
@@ -15,23 +17,25 @@ const LEVELS = [
       "Doom scroll จนหมด FYP แล้วกด refresh หาอีก"
     ],
     rx: "นอนก่อนตี 2 ติดกัน 3 คืน — ไม่ต้องทำอะไรเพิ่ม",
-    stamp: "ผ่านการ\nตรวจแล้ว"
   },
   {
     en: "MEDIUM DONE",
     th: "สุกกลางๆ แล้ว",
+    header: "สุกกลางๆ อย่างเป็นทางการ",
+    body: "ระยะที่คิดว่าตัวเองโอเค แต่ทุกคนรู้แล้ว",
     range: [34, 49],
     symptoms: [
       "กาแฟแก้วที่ 3 แต่ยังง่วง — ร่างกายยอมแพ้แล้ว",
       "วางแผน self-care ทุกคืน แต่ท้ายวันนอนดู YouTube จนตี 2",
       "เห็น notification แล้ว pretend ไม่เห็น แต่ก็กังวลอยู่ดี"
     ],
-    rx: "ลาหยุด 1 วัน โดยไม่รู้สึกผิด (สำคัญมาก)",
-    stamp: "ผ่านการ\nตรวจแล้ว"
+    rx: "ลาหยุด 1 วัน โดยไม่รู้สึกผิด — สำคัญมาก",
   },
   {
     en: "CRISPY",
     th: "กรอบพอดีเลย",
+    header: "กรอบ — วินิจฉัยแน่ชัด",
+    body: "สมองได้รับความเสียหายระดับกลาง ยืนยันแล้ว",
     range: [52, 67],
     symptoms: [
       "Brain rot เต็มขั้น — คิดเป็น meme แทนคำพูดปกติ",
@@ -39,11 +43,12 @@ const LEVELS = [
       "อยู่บ้านก็อยากออก ออกไปแล้วก็อยากกลับบ้าน"
     ],
     rx: "หยุดดูจอ 1 ชั่วโมง — ถ้าทำได้ก็เก่งมาก",
-    stamp: "ผ่านการ\nตรวจแล้ว"
   },
   {
     en: "FULLY BURNT",
     th: "ไหม้เต็มที่แล้ว",
+    header: "ไหม้สนิท ไม่มีทางถกเถียง",
+    body: "ผู้ป่วยทำงานหนักเกินศักยภาพของมนุษย์ปกติ",
     range: [70, 83],
     symptoms: [
       "ฝันเกี่ยวกับ to-do list ที่ไม่มีวันหมด",
@@ -51,11 +56,12 @@ const LEVELS = [
       "ลอง meditation แต่สิ่งที่ต้องทำผุดในหัวตลอด"
     ],
     rx: "ลาพักร้อน — ห้ามเช็คอีเมล ห้ามแม้แต่ดู Slack",
-    stamp: "ผ่านการ\nตรวจแล้ว"
   },
   {
     en: "CHARCOAL",
     th: "ถ่านแท้ 100%",
+    header: "ถ่านแท้ 100% — ไม่มีทางแก้",
+    body: "คลินิกขอแสดงความเสียใจอย่างสุดซึ้ง",
     range: [86, 96],
     symptoms: [
       "ไม่มีความปรารถนาจะ hustle อีกต่อไป — cured of ambition",
@@ -63,16 +69,15 @@ const LEVELS = [
       "เข้าใจแล้วว่าทำไม Eat Pray Love ถึงดูสมเหตุสมผล"
     ],
     rx: "Witness protection program — ติดต่อได้ที่ไหนก็ไม่รู้",
-    stamp: "ผ่านการ\nตรวจแล้ว"
   }
 ];
 
 const DOCTORS = [
-  { name: "Dr. Chad Burnsworth",   title: "Specialist in Chronic Monday-itis" },
-  { name: "Dr. Karen Quit-it",     title: "Board Certified · ที่ปรึกษาอาการ 'ทนไม่ไหว'" },
-  { name: "Dr. Kevin Log-off",     title: "Zoom Fatigue Expert · ก็เหนื่อยเหมือนกัน" },
-  { name: "Dr. Brian No-vacation", title: "แพทย์ผู้เชี่ยวชาญ · เคยลองหยุดงานดูแล้ว" },
-  { name: "Dr. Susan Just-quit",   title: "อดีตพนักงานดีเด่น · ปัจจุบันเลี้ยงแมว" },
+  { name: "หมอกิตติ สิงหาคม",    title: "อายุรแพทย์" },
+  { name: "หมอนุ้ย ลาก่อนนะ",   title: "จิตแพทย์" },
+  { name: "หมอบิ๊ก แวะมาดู",    title: "แพทย์ทั่วไป" },
+  { name: "พญ.ติ๊ก ทนดูอยู่",   title: "ที่ปรึกษา" },
+  { name: "หมอต้น พักก่อนเด้อ", title: "แพทย์" },
 ];
 
 function getMeetingSymptom(count) {
@@ -398,7 +403,8 @@ function showResult(level, meetingCount) {
   document.getElementById('certMeetings').textContent    = meetingCount;
   document.getElementById('certDoctorShort').textContent = currentDoctor.name;
   document.getElementById('certLevelEn').textContent     = level.en;
-  document.getElementById('certLevelTh').textContent     = level.th;
+  document.getElementById('certLevelHeader').textContent = level.header;
+  document.getElementById('certLevelBody').textContent   = level.body;
   document.getElementById('certScore').textContent       = level.score + '%';
 
   const ul = document.getElementById('certSymptoms');
@@ -412,17 +418,17 @@ function showResult(level, meetingCount) {
 
   showScreen('result');
 
-  // Cert reveal animation
+  // Cert reveal — brief pause so user sees the printer machine, then paper feeds
   const wrap = document.getElementById('certRevealWrap');
   wrap.classList.remove('printing');
-  requestAnimationFrame(() => requestAnimationFrame(() => {
+  setTimeout(() => {
     wrap.classList.add('printing');
-  }));
+  }, 700);
 
-  // Score bar animates after cert reveals enough (~60% through animation)
+  // Score bar animates at ~60% through 3.5s animation
   setTimeout(() => {
     document.getElementById('certBarFill').style.width = level.score + '%';
-  }, 1200);
+  }, 2800);
 }
 
 // ===== SAVE PNG (IG Story 9:16) =====
@@ -436,11 +442,11 @@ document.getElementById('savePngBtn').addEventListener('click', async () => {
     await document.fonts.ready;
     const cert = document.getElementById('certificate');
 
-    // Temporarily remove clip animation so html2canvas sees full cert
+    // Temporarily unhide cert for html2canvas
     const wrap = document.getElementById('certRevealWrap');
-    const prevStyle = wrap.style.cssText;
     wrap.style.clipPath = 'none';
-    wrap.classList.remove('printing');
+    wrap.style.transform = 'none';
+    wrap.style.animation = 'none';
 
     const certCanvas = await html2canvas(cert, {
       scale: 3,
@@ -450,56 +456,11 @@ document.getElementById('savePngBtn').addEventListener('click', async () => {
       logging: false,
     });
 
-    wrap.style.cssText = prevStyle;
-    wrap.classList.add('printing');
+    wrap.style.clipPath = '';
+    wrap.style.transform = '';
+    wrap.style.animation = '';
 
-    // IG Story canvas: 1080 × 1920 (9:16)
-    const IG_W = 1080, IG_H = 1920;
-    const ig = document.createElement('canvas');
-    ig.width = IG_W; ig.height = IG_H;
-    const ctx = ig.getContext('2d');
-
-    // Dark background
-    ctx.fillStyle = '#111111';
-    ctx.fillRect(0, 0, IG_W, IG_H);
-
-    // Printer bar at top
-    ctx.fillStyle = '#1c1c1e';
-    ctx.fillRect(0, 0, IG_W, 90);
-    ctx.fillStyle = '#000';
-    ctx.fillRect(0, 90, IG_W, 8);
-
-    // LED dots
-    const ledR = 7;
-    ctx.beginPath(); ctx.arc(40, 45, ledR, 0, Math.PI * 2);
-    ctx.fillStyle = '#27ae60'; ctx.fill();
-    ctx.beginPath(); ctx.arc(IG_W - 40, 45, ledR, 0, Math.PI * 2);
-    ctx.fillStyle = '#27ae60'; ctx.fill();
-
-    // Label
-    ctx.fillStyle = 'rgba(255,255,255,0.28)';
-    ctx.font = '400 18px "Space Mono", "Courier New", monospace';
-    ctx.textAlign = 'center';
-    ctx.fillText('BURN YOUNG BRO CLINIC · DIAGNOSTIC PRINTER', IG_W / 2, 52);
-
-    // Center certificate in remaining space
-    const availH = IG_H - 98 - 60; // below printer bar, above bottom
-    const scale = Math.min((IG_W - 80) / certCanvas.width, availH / certCanvas.height);
-    const dw = certCanvas.width * scale;
-    const dh = certCanvas.height * scale;
-    const dx = (IG_W - dw) / 2;
-    const dy = 98 + (availH - dh) / 2;
-    ctx.drawImage(certCanvas, dx, dy, dw, dh);
-
-    // Subtle bottom bar
-    ctx.fillStyle = '#1c1c1e';
-    ctx.fillRect(0, IG_H - 60, IG_W, 60);
-    ctx.fillStyle = 'rgba(255,255,255,0.18)';
-    ctx.font = '400 16px "Space Mono", "Courier New", monospace';
-    ctx.textAlign = 'center';
-    ctx.fillText('BURN YOUNG BRO · BURNOUT DIAGNOSTIC CENTER', IG_W / 2, IG_H - 22);
-
-    const dataUrl = ig.toDataURL('image/png');
+    const dataUrl = certCanvas.toDataURL('image/png');
     const isIOS = /iPhone|iPad|iPod/i.test(navigator.userAgent);
     if (isIOS) {
       // iOS Safari doesn't support link.download — open in new tab, user long-press to save
