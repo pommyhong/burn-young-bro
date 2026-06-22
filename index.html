@@ -1,0 +1,284 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Burn Young Bro — Clinic</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Space+Mono:ital,wght@0,400;0,700;1,400&family=Sarabun:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js" defer></script>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+
+  <!-- ===== SCREEN 1: INTAKE (upload + form combined) ===== -->
+  <div id="screen-intake" class="screen active">
+    <div class="form-bg">
+      <div class="paper-doc" id="intakeForm">
+        <div class="paper-noise" aria-hidden="true"></div>
+
+        <!-- Header -->
+        <div class="form-header">
+          <div class="form-header-left">
+            <div class="form-clinic-en">BURN YOUNG BRO CLINIC</div>
+            <div class="form-clinic-th">คลินิกวินิจฉัยความเหนื่อยล้า</div>
+          </div>
+          <div class="form-header-cross">🩹</div>
+        </div>
+        <div class="form-doc-title">แบบฟอร์มผู้ป่วย</div>
+
+        <!-- HN + Date -->
+        <div class="form-meta-row">
+          <span>HN: <strong id="formHN">–</strong></span>
+          <span>วันที่: <strong id="formDate">–</strong></span>
+        </div>
+
+        <!-- Photo zone — full width, center -->
+        <label class="photo-upload-zone" id="photoZone">
+          <div class="photo-wrapper">
+            <img class="photo-patient" id="formPhoto" src="" alt="" />
+            <div class="photo-grain" aria-hidden="true"></div>
+            <div class="photo-hint" id="photoHint">
+              <svg class="photo-hint-svg" viewBox="0 0 100 120" xmlns="http://www.w3.org/2000/svg" fill="none" aria-hidden="true">
+                <defs>
+                  <filter id="sk" x="-10%" y="-10%" width="120%" height="120%">
+                    <feTurbulence type="fractalNoise" baseFrequency="0.04" numOctaves="3" seed="5" result="n"/>
+                    <feDisplacementMap in="SourceGraphic" in2="n" scale="1.8" xChannelSelector="R" yChannelSelector="G"/>
+                  </filter>
+                </defs>
+                <rect x="3" y="3" width="94" height="114" rx="2" stroke="rgba(0,0,0,0.1)" stroke-width="1" stroke-dasharray="5 4"/>
+                <ellipse cx="50" cy="37" rx="20" ry="24" stroke="rgba(0,0,0,0.22)" stroke-width="1.8" filter="url(#sk)"/>
+                <circle cx="43" cy="33" r="2.5" fill="rgba(0,0,0,0.18)" filter="url(#sk)"/>
+                <circle cx="57" cy="33" r="2.5" fill="rgba(0,0,0,0.18)" filter="url(#sk)"/>
+                <path d="M43 50 Q50 56 57 50" stroke="rgba(0,0,0,0.14)" stroke-width="1.5" stroke-linecap="round" filter="url(#sk)"/>
+                <line x1="44" y1="60" x2="42" y2="71" stroke="rgba(0,0,0,0.14)" stroke-width="1.5" filter="url(#sk)"/>
+                <line x1="56" y1="60" x2="58" y2="71" stroke="rgba(0,0,0,0.14)" stroke-width="1.5" filter="url(#sk)"/>
+                <path d="M10 96 Q26 72 44 73 Q50 71 56 73 Q74 72 90 96" stroke="rgba(0,0,0,0.2)" stroke-width="1.8" stroke-linecap="round" filter="url(#sk)"/>
+              </svg>
+              <span class="photo-hint-text">วางรูปหน้าตรงนี้</span>
+            </div>
+          </div>
+          <input type="file" id="photoInput" accept="image/*" class="file-input-hidden" />
+        </label>
+        <!-- Explicit photo action buttons -->
+        <div class="photo-actions">
+          <label class="photo-action-btn" for="photoInput">⬆ อัปโหลดรูป</label>
+          <button class="photo-action-btn" id="cameraBtn" type="button">📷 ถ่ายรูป</button>
+        </div>
+
+        <!-- Patient info grid (below photo) -->
+        <div class="intake-patient-info">
+          <div class="intake-info-row">
+            <span class="intake-info-label">ชื่อ</span>
+            <input type="text" id="patientName" class="name-input"
+              placeholder="ชื่อหรือชื่อเล่น" maxlength="40" autocomplete="off" />
+          </div>
+          <div class="intake-info-row">
+            <span class="intake-info-label">สถานะ</span>
+            <span class="intake-info-value">ยังไปทำงานอยู่</span>
+          </div>
+        </div>
+
+        <div class="form-section-divider">อาการและประวัติ</div>
+
+        <!-- Meeting count -->
+        <div class="form-field-block">
+          <label class="field-label">จำนวน Meeting วันนี้ <span class="field-unit">(ครั้ง)</span></label>
+          <select id="meetingSelect" class="form-select">
+            <option value="">-- กรุณาเลือก --</option>
+            <option value="1">1</option>
+            <option value="2">2</option>
+            <option value="3">3</option>
+            <option value="4">4</option>
+            <option value="5">5</option>
+            <option value="6">6</option>
+            <option value="7">7</option>
+            <option value="8">8 ขึ้นไป</option>
+          </select>
+        </div>
+
+        <!-- Notes -->
+        <div class="form-field-block">
+          <label class="field-label">อาการเพิ่มเติม <span class="field-unit">(ถ้ามี)</span></label>
+          <textarea id="notesInput" class="form-textarea" rows="3"
+            placeholder="เช่น ดื่มกาแฟ 3 แก้วแล้วยังง่วง · เปิด Figma แล้วนั่งเฉยๆ 20 นาที · inbox เต็มแต่เลือกไม่เปิด"
+          ></textarea>
+        </div>
+
+        <button class="btn-form-submit" id="submitForm">ส่งข้อมูลให้หมอ</button>
+        <p class="form-footnote">* กดรูปเพื่ออัปโหลดหน้าตัวเอง · แพทย์วิเคราะห์ใน 3–5 วินาที</p>
+      </div>
+    </div>
+
+    <!-- Camera modal -->
+    <div id="cameraModal" class="modal hidden">
+      <div class="modal-box">
+        <p class="modal-label">วางหน้าในกรอบ</p>
+        <video id="cameraFeed" autoplay playsinline></video>
+        <div class="camera-actions">
+          <button class="btn btn-dark" id="snapBtn">ถ่ายรูป</button>
+          <button class="btn btn-outline" id="cancelCameraBtn">ยกเลิก</button>
+        </div>
+        <canvas id="snapCanvas" hidden></canvas>
+      </div>
+    </div>
+  </div>
+
+  <!-- ===== SCREEN 2: LOADING — TYPEWRITER MACHINE ===== -->
+  <div id="screen-loading" class="screen hidden">
+    <div class="twm-stage">
+
+      <!-- Paper strip feeds upward from carriage slot -->
+      <div class="twm-paper-strip" id="twmPaperStrip">
+        <div class="twm-paper-ruled" aria-hidden="true"></div>
+        <div class="twm-paper-ruled" aria-hidden="true"></div>
+        <div class="twm-paper-ruled" aria-hidden="true"></div>
+        <div class="twm-paper-ruled" aria-hidden="true"></div>
+        <div class="twm-paper-ruled" aria-hidden="true"></div>
+      </div>
+
+      <!-- Typewriter machine illustration -->
+      <div class="twm-machine">
+        <div class="twm-carriage" id="twmCarriage">
+          <div class="twm-knob"></div>
+          <div class="twm-platen"><div class="twm-platen-gloss"></div></div>
+          <div class="twm-knob"></div>
+        </div>
+        <div class="twm-chassis">
+          <div class="twm-key-row" id="twmRow1"></div>
+          <div class="twm-key-row" id="twmRow2"></div>
+          <div class="twm-key-row" id="twmRow3"></div>
+        </div>
+        <div class="twm-basebar">
+          <span class="twm-brand">BYB CLINIC · DIAGNOSTIC v2.6</span>
+          <span class="twm-led" id="twmLed"></span>
+        </div>
+      </div>
+
+      <!-- Diagnostic output text -->
+      <div class="twm-output-area">
+        <pre class="twm-pre" id="twOutput"></pre><span class="twm-cursor" id="twCursor">█</span>
+      </div>
+
+      <div class="twm-hn" id="twHN"></div>
+      <div class="twm-doctor-label" id="twDoctorLabel"></div>
+
+    </div>
+  </div>
+
+  <!-- ===== SCREEN 4: RESULT / CERTIFICATE ===== -->
+  <div id="screen-result" class="screen hidden">
+    <div class="result-bg">
+
+      <!-- Printer machine bar (not captured in PNG) -->
+      <div class="printer-machine" aria-hidden="true">
+        <div class="printer-machine-bar">
+          <div class="printer-led printer-led-blink" id="printerLed"></div>
+          <div class="printer-brand-label">BURN YOUNG BRO CLINIC · DIAGNOSTIC PRINTER</div>
+          <div class="printer-led"></div>
+        </div>
+        <div class="printer-output-slot"></div>
+      </div>
+
+      <!-- Certificate ejects from printer slot -->
+      <div class="cert-reveal-wrap" id="certRevealWrap">
+      <!-- THE CERTIFICATE — captured for PNG -->
+      <div id="certificate" class="paper-doc cert-doc">
+        <div class="paper-noise" aria-hidden="true"></div>
+
+        <!-- Cert header -->
+        <div class="cert-header">
+          <div class="cert-header-left">
+            <div class="cert-clinic-en">BURN YOUNG BRO CLINIC</div>
+            <div class="cert-clinic-th">คลินิกวินิจฉัยความเหนื่อยล้า</div>
+          </div>
+          <div class="cert-header-cross">✚</div>
+        </div>
+
+        <div class="cert-doc-title">ใบรับรองแพทย์</div>
+        <div class="cert-doc-sub">(ฉบับสมัครใจ)</div>
+
+        <!-- Patient info row -->
+        <div class="cert-patient-row">
+          <div class="photo-wrapper cert-photo-wrapper">
+            <img class="photo-patient loaded" id="certPhoto" src="" alt="" />
+            <div class="photo-grain" aria-hidden="true"></div>
+          </div>
+          <div class="cert-patient-meta">
+            <div class="cert-meta-item cert-patient-name-item">
+              <span class="cert-meta-label">ผู้ป่วย</span>
+              <span id="certPatientName">ผู้ป่วยสมัครใจ</span>
+            </div>
+            <div class="cert-meta-item">
+              <span class="cert-meta-label">HN</span>
+              <span id="certHN">BYB-240622</span>
+            </div>
+            <div class="cert-meta-item">
+              <span class="cert-meta-label">วันที่</span>
+              <span id="certDate">22/06/2026</span>
+            </div>
+            <div class="cert-meta-item">
+              <span class="cert-meta-label">Meeting</span>
+              <span id="certMeetings">–</span> ครั้ง
+            </div>
+            <div class="cert-meta-item">
+              <span class="cert-meta-label">แพทย์</span>
+              <span id="certDoctorShort">–</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="cert-section-label">ผลการตรวจ</div>
+
+        <div class="cert-diagnosis-block">
+          <div class="cert-level-en" id="certLevelEn">CHARCOAL</div>
+          <div class="cert-level-th" id="certLevelTh">ถ่านแท้ 100%</div>
+          <div class="cert-score-row">
+            <span class="cert-score-label">ดัชนีความเหนื่อยล้า</span>
+            <div class="cert-bar-track">
+              <div class="cert-bar-fill" id="certBarFill"></div>
+            </div>
+            <span class="cert-score-num" id="certScore">87%</span>
+          </div>
+        </div>
+
+        <div class="cert-section-label">อาการที่ตรวจพบ</div>
+        <ul class="cert-symptoms" id="certSymptoms"></ul>
+
+        <div class="cert-rx-row">
+          <span class="cert-rx-label">Rx</span>
+          <span class="cert-rx-text" id="certRx"></span>
+        </div>
+
+        <!-- Signature + stamp row -->
+        <div class="cert-sig-row">
+          <div class="cert-sig-block">
+            <div class="cert-sig-line">____________________________________________</div>
+            <div class="cert-doctor-name" id="certDoctorName">นพ.เหนื่อยแล้ว ไปพักก่อน</div>
+            <div class="cert-doctor-title" id="certDoctorTitle">แพทย์ผู้ตรวจ · คลินิกวินิจฉัยความเหนื่อยล้า</div>
+          </div>
+          <div class="cert-stamp-block">
+            <div class="cert-stamp" id="certStamp">ผ่านการ<br>ตรวจแล้ว</div>
+          </div>
+        </div>
+
+        <div class="cert-bottom-note">
+          ใบรับรองนี้ออกให้เพื่อแปะฝาผนัง · ไม่ใช่ใบลาป่วย · ไม่สามารถนำไปเรียกค่าเสียหายได้
+        </div>
+      </div>
+
+      </div><!-- /cert-reveal-wrap -->
+
+      <!-- Action buttons (not captured) -->
+      <div class="result-actions" id="resultActions">
+        <button class="btn btn-dark" id="savePngBtn">⬇ บันทึกเป็น PNG</button>
+        <button class="btn btn-outline" id="printBtn">🖨 พิมพ์</button>
+        <button class="btn btn-ghost" id="redoBtn">↩ ตรวจใหม่</button>
+      </div>
+    </div>
+  </div>
+
+  <script src="script.js" defer></script>
+</body>
+</html>
