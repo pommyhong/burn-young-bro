@@ -496,10 +496,19 @@ document.getElementById('savePngBtn').addEventListener('click', async () => {
     ctx.textAlign = 'center';
     ctx.fillText('BURN YOUNG BRO · BURNOUT DIAGNOSTIC CENTER', IG_W / 2, IG_H - 22);
 
-    const link = document.createElement('a');
-    link.download = `burn-young-bro-story-${Date.now()}.png`;
-    link.href = ig.toDataURL('image/png');
-    link.click();
+    const dataUrl = ig.toDataURL('image/png');
+    const isIOS = /iPhone|iPad|iPod/i.test(navigator.userAgent);
+    if (isIOS) {
+      // iOS Safari doesn't support link.download — open in new tab, user long-press to save
+      const w = window.open();
+      w.document.write(`<img src="${dataUrl}" style="max-width:100%;display:block">`);
+      w.document.title = 'burn-young-bro';
+    } else {
+      const link = document.createElement('a');
+      link.download = `burn-young-bro-story-${Date.now()}.png`;
+      link.href = dataUrl;
+      link.click();
+    }
   } catch (err) {
     console.error(err);
     alert('ไม่สามารถบันทึกรูปได้\nลองกดพิมพ์แทนได้เลย');
