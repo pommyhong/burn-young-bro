@@ -90,6 +90,7 @@ function getMeetingSymptom(count) {
 
 // ===== STATE =====
 let photoDataUrl = null;   // blob: URL for display
+let typingActive = false;  // stops typewriter sound when screen transitions
 let photoFile    = null;   // original File for html2canvas fallback
 let cameraStream = null;
 let currentDoctor = DOCTORS[0];
@@ -294,6 +295,7 @@ function playPrintFeed(durationSec) {
 function sleep(ms) { return new Promise(r => setTimeout(r, ms)); }
 
 async function runTypewriter(meetingCount) {
+  typingActive = true;
   const patientName = document.getElementById('patientName').value.trim() || 'ไม่ระบุชื่อ';
   const cortisol = 60 + Math.floor(Math.random() * 30);
   const eyebag   = ['สูง', 'สูงมาก', 'วิกฤต'][Math.floor(Math.random() * 3)];
@@ -312,11 +314,13 @@ async function runTypewriter(meetingCount) {
 
   for (const line of lines) {
     for (const ch of line) {
+      if (!typingActive) return;
       out.textContent += ch;
       playTypeClick();
       pressRandomKey();
       await sleep(Math.random() * 85 + 55);
     }
+    if (!typingActive) return;
     out.textContent += '\n';
     playCarriageReturn();
     animateCarriageReturn();
@@ -390,6 +394,7 @@ function pickLevel(meetingCount) {
 
 // ===== SHOW RESULT =====
 function showResult(level, meetingCount) {
+  typingActive = false;
   // Fill cert data first (while hidden)
   const certPhoto = document.getElementById('certPhoto');
   certPhoto.src = photoDataUrl;
@@ -451,7 +456,7 @@ document.getElementById('savePngBtn').addEventListener('click', async () => {
     if (doctorRow) doctorRow.style.display = 'none';
 
     const certCanvas = await html2canvas(cert, {
-      scale: 2.5,
+      scale: Math.max(window.devicePixelRatio || 2, 2),
       useCORS: true,
       allowTaint: true,
       backgroundColor: '#EDE8D6',
