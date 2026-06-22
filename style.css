@@ -1160,7 +1160,7 @@ body {
 .cert-stamp {
   width: 80px;
   height: 80px;
-  border: 2.5px solid var(--ink);
+  border: 2.5px solid #cc1400;
   border-radius: 50%;
   display: flex;
   align-items: center;
@@ -1171,8 +1171,9 @@ body {
   font-weight: 700;
   line-height: 1.4;
   letter-spacing: 0.5px;
+  color: #cc1400;
   transform: rotate(-12deg);
-  opacity: 0.5;
+  opacity: 0.75;
 }
 
 .cert-bottom-note {

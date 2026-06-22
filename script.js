@@ -10,11 +10,11 @@ const LEVELS = [
     th: "เริ่มเกรียมนิดๆ",
     range: [18, 31],
     symptoms: [
-      "ตอบ 'fine' ทุกคน ทั้งที่ไม่ fine",
-      "เปิดอีเมลแล้วปิดทันที ซ้ำไปมาหลายรอบ",
-      "เริ่มคิดว่าแมวมีชีวิตที่ดีกว่าตัวเอง"
+      "ตอบ 'fine' ทุกคน ทั้งที่ไม่ fine เลย",
+      "วางโทรศัพท์แล้วหยิบขึ้นมาดูทันที โดยไม่มีเหตุผล",
+      "Doom scroll จนหมด FYP แล้วกด refresh หาอีก"
     ],
-    rx: "นอนก่อน 11 โมงให้ได้ติดต่อกัน 3 คืน",
+    rx: "นอนก่อนตี 2 ติดกัน 3 คืน — ไม่ต้องทำอะไรเพิ่ม",
     stamp: "ผ่านการ\nตรวจแล้ว"
   },
   {
@@ -22,11 +22,11 @@ const LEVELS = [
     th: "สุกกลางๆ แล้ว",
     range: [34, 49],
     symptoms: [
-      "กาแฟเลิกออกฤทธิ์ — ดื่มแค่เป็นพิธีทางจิตใจ",
-      "วันจันทร์รู้สึกเหมือนเป็นการโจมตีส่วนตัว",
-      "ร้องไห้แบบไม่รู้สาเหตุ อาทิตย์ละ 2–3 ครั้ง"
+      "กาแฟแก้วที่ 3 แต่ยังง่วง — ร่างกายยอมแพ้แล้ว",
+      "วางแผน self-care ทุกคืน แต่ท้ายวันนอนดู YouTube จนตี 2",
+      "เห็น notification แล้ว pretend ไม่เห็น แต่ก็กังวลอยู่ดี"
     ],
-    rx: "ลาหยุด 1 วัน โดยไม่รู้สึกผิด",
+    rx: "ลาหยุด 1 วัน โดยไม่รู้สึกผิด (สำคัญมาก)",
     stamp: "ผ่านการ\nตรวจแล้ว"
   },
   {
@@ -34,11 +34,11 @@ const LEVELS = [
     th: "กรอบพอดีเลย",
     range: [52, 67],
     symptoms: [
-      "มีแท็บเปิดค้างอยู่ 40+ แท็บตลอดเวลา",
-      "ไม่จำได้แล้วว่า hobby ตัวเองคืออะไร",
-      "Calendar notification = anxiety attack ทุกครั้ง"
+      "Brain rot เต็มขั้น — คิดเป็น meme แทนคำพูดปกติ",
+      "มีแท็บเปิดค้าง 47 แท็บ ไม่มีแท็บไหนมีประโยชน์",
+      "อยู่บ้านก็อยากออก ออกไปแล้วก็อยากกลับบ้าน"
     ],
-    rx: "ลาพักร้อน — ห้ามเช็คอีเมลเด็ดขาด",
+    rx: "หยุดดูจอ 1 ชั่วโมง — ถ้าทำได้ก็เก่งมาก",
     stamp: "ผ่านการ\nตรวจแล้ว"
   },
   {
@@ -46,11 +46,11 @@ const LEVELS = [
     th: "ไหม้เต็มที่แล้ว",
     range: [70, 83],
     symptoms: [
-      "คุยกับต้นไม้ในบ้านเป็นกิจวัตรประจำวัน",
-      "เงินเดือนไม่คุ้มกับความเสียหายทางจิตใจ",
-      "ฝันถึง deadline แม้วันหยุดยาว"
+      "ฝันเกี่ยวกับ to-do list ที่ไม่มีวันหมด",
+      "เห็นคนอื่นมีความสุขแล้วรู้สึกแปลกใจว่าทำได้ยังไง",
+      "ลอง meditation แต่สิ่งที่ต้องทำผุดในหัวตลอด"
     ],
-    rx: "หยุดยาว + ห้ามมีการประชุมเลย 1 สัปดาห์",
+    rx: "ลาพักร้อน — ห้ามเช็คอีเมล ห้ามแม้แต่ดู Slack",
     stamp: "ผ่านการ\nตรวจแล้ว"
   },
   {
@@ -58,29 +58,29 @@ const LEVELS = [
     th: "ถ่านแท้ 100%",
     range: [86, 96],
     symptoms: [
-      "พิจารณาเปิดโรงแรมแมว / หนีไปทำสวน / ลาออก",
-      "Meeting invite = personal threat ระดับสูงสุด",
-      "เข้าใจแล้วว่าทำไมคนถึงลาออกแบบไม่บอกล่วงหน้า"
+      "ไม่มีความปรารถนาจะ hustle อีกต่อไป — cured of ambition",
+      "กำลังพิจารณาหนีไปเลี้ยงแกะ เปิดร้านกาแฟ หรือหาย",
+      "เข้าใจแล้วว่าทำไม Eat Pray Love ถึงดูสมเหตุสมผล"
     ],
-    rx: "Witness protection program — ทันที",
+    rx: "Witness protection program — ติดต่อได้ที่ไหนก็ไม่รู้",
     stamp: "ผ่านการ\nตรวจแล้ว"
   }
 ];
 
 const DOCTORS = [
-  { name: "หมอกิตติ สิงหาคม",    title: "อายุรแพทย์ประจำคลินิก" },
-  { name: "หมอนุ้ย ลาก่อนนะ",   title: "จิตแพทย์ · เชี่ยวชาญการนอน" },
-  { name: "หมอบิ๊ก แวะมาดู",    title: "แพทย์ทั่วไป · ลาออกแล้วกลับมา" },
-  { name: "พญ.ติ๊ก ทนดูอยู่",   title: "ที่ปรึกษาสุขภาพจิตองค์กร" },
-  { name: "หมอต้น พักก่อนเด้อ", title: "แพทย์ผู้เชี่ยวชาญความเครียดสะสม" },
+  { name: "Dr. Chad Burnsworth",   title: "Specialist in Chronic Monday-itis" },
+  { name: "Dr. Karen Quit-it",     title: "Board Certified · ที่ปรึกษาอาการ 'ทนไม่ไหว'" },
+  { name: "Dr. Kevin Log-off",     title: "Zoom Fatigue Expert · ก็เหนื่อยเหมือนกัน" },
+  { name: "Dr. Brian No-vacation", title: "แพทย์ผู้เชี่ยวชาญ · เคยลองหยุดงานดูแล้ว" },
+  { name: "Dr. Susan Just-quit",   title: "อดีตพนักงานดีเด่น · ปัจจุบันเลี้ยงแมว" },
 ];
 
 function getMeetingSymptom(count) {
-  if (count <= 1) return "มี meeting เพียง 1 ครั้ง แต่ก็ยังอ่อนเพลียได้ตามปกติ";
-  if (count <= 3) return `ใช้เวลา ${count} ชั่วโมงในห้องประชุม · deep work ไม่ค่อยได้เกิด`;
-  if (count <= 5) return `${count} meetings — Calendar เริ่มไม่มีช่องว่างให้หายใจ`;
-  if (count <= 7) return `${count} meetings ใน 1 วัน · ทำงานจริงๆ ได้เมื่อไหร่`;
-  return "8 meetings ขึ้นไป — ร่างกายอยู่ในห้องประชุม แต่จิตใจไปแล้ว";
+  if (count <= 1) return "meeting 1 ครั้ง — ยังพอมีชีวิตรอด";
+  if (count <= 3) return `${count} meetings · ยังมีเวลาหายใจอยู่บ้าง`;
+  if (count <= 5) return `${count} meetings — Calendar เริ่มดูเหมือน Tetris`;
+  if (count <= 7) return `${count} meetings ใน 1 วัน · ทำงานจริงๆ ได้เมื่อไหร่กัน`;
+  return "8+ meetings — ร่างกายอยู่ในห้องประชุม จิตใจไปแล้ว ดีนะ";
 }
 
 // ===== STATE =====
@@ -151,10 +151,13 @@ photoZone.addEventListener('drop', e => {
 });
 
 function loadPhoto(file) {
-  if (photoDataUrl && photoDataUrl.startsWith('blob:')) URL.revokeObjectURL(photoDataUrl);
-  photoFile    = file;
-  photoDataUrl = URL.createObjectURL(file);
-  setFormPhoto(photoDataUrl);
+  photoFile = file;
+  const reader = new FileReader();
+  reader.onload = (e) => {
+    photoDataUrl = e.target.result; // data: URL — html2canvas safe, no CORS
+    setFormPhoto(photoDataUrl);
+  };
+  reader.readAsDataURL(file);
 }
 
 function setFormPhoto(src) {
@@ -308,7 +311,7 @@ async function runTypewriter(meetingCount) {
       out.textContent += ch;
       playTypeClick();
       pressRandomKey();
-      await sleep(Math.random() * 65 + 30);
+      await sleep(Math.random() * 85 + 55);
     }
     out.textContent += '\n';
     playCarriageReturn();
@@ -523,7 +526,7 @@ document.getElementById('printBtn').addEventListener('click', () => window.print
 
 // ===== REDO =====
 document.getElementById('redoBtn').addEventListener('click', () => {
-  if (photoDataUrl && photoDataUrl.startsWith('blob:')) URL.revokeObjectURL(photoDataUrl);
+  photoDataUrl = null;
   photoDataUrl = null; photoFile = null;
   photoInput.value = '';
   const fp = document.getElementById('formPhoto');
