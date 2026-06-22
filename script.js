@@ -89,7 +89,7 @@ function getMeetingSymptom(count) {
 }
 
 // ===== STATE =====
-let photoDataUrl = null;   // blob: URL for display
+let photoDataUrl = null;
 let typingActive = false;  // stops typewriter sound when screen transitions
 let photoFile    = null;   // original File for html2canvas fallback
 let cameraStream = null;
