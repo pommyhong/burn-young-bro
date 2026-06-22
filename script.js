@@ -266,28 +266,27 @@ function playCarriageReturn() {
   } catch(e) {}
 }
 
-function playPrinterMotor(durationSec) {
+function playPrintFeed(durationSec) {
   try {
     const ctx = getAudioCtx();
-    const len = Math.floor(ctx.sampleRate * durationSec);
-    const nBuf = ctx.createBuffer(1, len, ctx.sampleRate);
-    const nd = nBuf.getChannelData(0);
-    for (let i = 0; i < len; i++) nd[i] = (Math.random() * 2 - 1) * 0.018;
-    const ns = ctx.createBufferSource(); ns.buffer = nBuf;
-    const bf = ctx.createBiquadFilter(); bf.type = 'bandpass';
-    bf.frequency.value = 1800; bf.Q.value = 3;
-    const g = ctx.createGain();
-    g.gain.setValueAtTime(1, ctx.currentTime);
+    const sr = ctx.sampleRate;
+    const len = Math.floor(sr * durationSec);
+    const buf = ctx.createBuffer(1, len, sr);
+    const d   = buf.getChannelData(0);
+    // Rhythmic paper-roller noise (~7Hz step cadence)
+    for (let i = 0; i < len; i++) {
+      const t   = i / sr;
+      const env = 0.55 + 0.45 * Math.sin(2 * Math.PI * 7 * t);
+      d[i] = (Math.random() * 2 - 1) * 0.024 * env;
+    }
+    const src = ctx.createBufferSource(); src.buffer = buf;
+    const lp  = ctx.createBiquadFilter(); lp.type = 'lowpass'; lp.frequency.value = 700;
+    const g   = ctx.createGain();
+    g.gain.setValueAtTime(0.75, ctx.currentTime);
+    g.gain.setValueAtTime(0.75, ctx.currentTime + durationSec - 0.5);
     g.gain.exponentialRampToValueAtTime(0.001, ctx.currentTime + durationSec);
-    ns.connect(bf); bf.connect(g); g.connect(ctx.destination);
-    ns.start(); ns.stop(ctx.currentTime + durationSec);
-
-    const hum = ctx.createOscillator(); hum.type = 'sawtooth'; hum.frequency.value = 85;
-    const hg = ctx.createGain();
-    hg.gain.setValueAtTime(0.025, ctx.currentTime);
-    hg.gain.exponentialRampToValueAtTime(0.001, ctx.currentTime + durationSec);
-    hum.connect(hg); hg.connect(ctx.destination);
-    hum.start(); hum.stop(ctx.currentTime + durationSec);
+    src.connect(lp); lp.connect(g); g.connect(ctx.destination);
+    src.start(); src.stop(ctx.currentTime + durationSec);
   } catch(e) {}
 }
 
@@ -423,6 +422,7 @@ function showResult(level, meetingCount) {
   wrap.classList.remove('printing');
   setTimeout(() => {
     wrap.classList.add('printing');
+    playPrintFeed(3.5);
   }, 700);
 
   // Score bar animates at ~60% through 3.5s animation
@@ -460,7 +460,19 @@ document.getElementById('savePngBtn').addEventListener('click', async () => {
     wrap.style.transform = '';
     wrap.style.animation = '';
 
-    const dataUrl = certCanvas.toDataURL('image/png');
+    // 1000×1250 export with dark background
+    const OUT_W = 1000, OUT_H = 1250;
+    const exportC = document.createElement('canvas');
+    exportC.width = OUT_W; exportC.height = OUT_H;
+    const ectx = exportC.getContext('2d');
+    ectx.fillStyle = '#111111';
+    ectx.fillRect(0, 0, OUT_W, OUT_H);
+    const pad = 36;
+    const sc  = Math.min((OUT_W - pad*2) / certCanvas.width, (OUT_H - pad*2) / certCanvas.height);
+    const dw  = certCanvas.width  * sc;
+    const dh  = certCanvas.height * sc;
+    ectx.drawImage(certCanvas, (OUT_W - dw) / 2, (OUT_H - dh) / 2, dw, dh);
+    const dataUrl = exportC.toDataURL('image/png');
     const isIOS = /iPhone|iPad|iPod/i.test(navigator.userAgent);
     if (isIOS) {
       // iOS Safari doesn't support link.download — open in new tab, user long-press to save
