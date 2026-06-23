@@ -8,8 +8,18 @@ const LEVELS = [
   {
     en: "TECHNICALLY ALIVE",
     th: "ยังมีชีพจรอยู่",
-    header: "ยังมีชีพจรอยู่ — ยืนยันแล้ว",
-    body: "อาการเบื้องต้น แต่ร่างกายเริ่มส่งสัญญาณแล้ว",
+    headerList: [
+      "ยังมีชีพจรอยู่ — ยืนยันแล้ว",
+      "เหนื่อยนิดๆ แต่ยังโอเค — ยืนยันโดยผู้เชี่ยวชาญ",
+      "ระดับ: ยังรับได้ — แต่อย่าเพิ่มงานอีกนะ",
+      "สัญญาณชีพ: ปกติ · ขวัญชีพ: เริ่มโยกเยก",
+    ],
+    bodyList: [
+      "อาการเบื้องต้น แต่ร่างกายเริ่มส่งสัญญาณแล้ว",
+      "ขอแสดงความยินดีที่ยังมาทำงานได้",
+      "ผู้ป่วยยังสามารถยิ้มได้โดยไม่ปลอม (บางครั้ง)",
+      "ยังไม่วิกฤต แต่อยู่ในโซนเฝ้าระวัง",
+    ],
     range: [18, 31],
     symptoms: [
       "ยิ้มทุกคน แต่ข้างในไม่โอเคเลยแม้แต่นิดเดียว",
@@ -32,8 +42,18 @@ const LEVELS = [
   {
     en: "SPIRITUALLY OFFLINE",
     th: "ออฟไลน์ทางจิตใจ",
-    header: "ออฟไลน์ทางจิตใจ อย่างเป็นทางการ",
-    body: "ทุกคนรู้ว่าไม่โอเค แต่ก็ถามว่า fine อยู่ดี",
+    headerList: [
+      "ออฟไลน์ทางจิตใจ อย่างเป็นทางการ",
+      "กายอยู่ · ใจไปแล้ว — รับทราบ",
+      "โหมดประหยัดพลังงาน — เปิดใช้งานแล้ว",
+      "disconnected from mainframe — ตรวจพบ",
+    ],
+    bodyList: [
+      "ทุกคนรู้ว่าไม่โอเค แต่ก็ถามว่า fine อยู่ดี",
+      "ผู้ป่วยปรากฏกายในที่ทำงานแต่ไม่ได้มาจริงๆ",
+      "ทำงานได้แต่ไม่มี passion เหลืออยู่",
+      "ร่างกายรันอยู่ แต่จิตใจออฟไลน์ชั่วคราว",
+    ],
     range: [34, 49],
     symptoms: [
       "กาแฟแก้วที่สามแต่ยังง่วง — ร่างกายยอมแพ้แล้ว",
@@ -56,8 +76,18 @@ const LEVELS = [
   {
     en: "EMOTIONALLY UNAVAILABLE",
     th: "ไม่ว่างทางอารมณ์",
-    header: "ไม่ว่างทางอารมณ์ — ยืนยันผลแล้ว",
-    body: "ผู้ป่วยขอสงวนสิทธิ์ไม่รู้สึกอะไรก่อนชั่วคราว",
+    headerList: [
+      "ไม่ว่างทางอารมณ์ — ยืนยันผลแล้ว",
+      "อารมณ์ตอบไม่รับสาย — ยืนยัน",
+      "feelings on do not disturb — ผลออกแล้ว",
+      "ใจอยู่ที่อื่น ไม่รู้ว่าที่ไหน — ตรวจพบ",
+    ],
+    bodyList: [
+      "ผู้ป่วยขอสงวนสิทธิ์ไม่รู้สึกอะไรก่อนชั่วคราว",
+      "ระบบ emotional response ถูก mute ไว้ก่อน",
+      "ผู้ป่วยไม่ได้เย็นชา แค่แบตหมดแล้ว",
+      "ขอแสดงความเสียใจ · โปรด recharge ก่อนนัดหน้า",
+    ],
     range: [52, 67],
     symptoms: [
       "นึกไม่ออกแล้วว่า hobby ของตัวเองคืออะไร",
@@ -80,8 +110,18 @@ const LEVELS = [
   {
     en: "PLEASE DO NOT CONTACT",
     th: "กรุณาอย่าติดต่อ",
-    header: "กรุณาอย่าติดต่อ — ขอบคุณ",
-    body: "inbox รอคุณอยู่ แต่คุณไม่รอมันแล้ว",
+    headerList: [
+      "กรุณาอย่าติดต่อ — ขอบคุณ",
+      "ไม่รับสาย · ไม่ตอบ · ไม่โอเค — รับทราบ",
+      "left on read — ผลการตรวจยืนยัน",
+      "out of office — indefinitely — ตรวจพบ",
+    ],
+    bodyList: [
+      "inbox รอคุณอยู่ แต่คุณไม่รอมันแล้ว",
+      "ผู้ป่วยอยู่ในโหมดเงียบแบบถาวร",
+      "ทุกอย่างอยู่ใน queue แต่ไม่มีใครจะเปิดดู",
+      "calendar เต็ม แต่ตัวเจ้าของ calendar ไปแล้ว",
+    ],
     range: [70, 83],
     symptoms: [
       "ฝันเห็นนาฬิกาปลุกแล้วรู้สึกเศร้า",
@@ -104,8 +144,18 @@ const LEVELS = [
   {
     en: "HAS LEFT THE CHAT",
     th: "ออกจากกลุ่มแล้ว",
-    header: "ออกจากกลุ่มแล้ว — ไม่มีการแจ้งเตือน",
-    body: "คลินิกขอแสดงความเสียใจอย่างสุดซึ้ง",
+    headerList: [
+      "ออกจากกลุ่มแล้ว — ไม่มีการแจ้งเตือน",
+      "server ไม่ตอบสนอง — ทุกช่องทาง",
+      "signal lost · searching… · not found",
+      "404 person not found — confirmed",
+    ],
+    bodyList: [
+      "คลินิกขอแสดงความเสียใจอย่างสุดซึ้ง",
+      "ผู้ป่วยได้รับการวินิจฉัยว่าหมดไฟอย่างสมบูรณ์แบบ",
+      "คลินิกจะจุดเทียนไว้ให้ที่โต๊ะทำงาน",
+      "ระบบตรวจพบว่าผู้ป่วยได้ log out จากชีวิตออฟฟิศแล้ว",
+    ],
     range: [86, 96],
     symptoms: [
       "ไม่อยากทำอะไรทั้งนั้น รวมถึงสิ่งที่เคยชอบ",
@@ -467,9 +517,10 @@ function showResult(level, meetingCount, notes = '') {
   document.getElementById('certDate').textContent        = formatDate(new Date());
   document.getElementById('certMeetings').textContent    = meetingCount;
   document.getElementById('certDoctorShort').textContent = currentDoctor.name;
+  const pick = arr => arr[Math.floor(Math.random() * arr.length)];
   document.getElementById('certLevelEn').textContent     = level.en;
-  document.getElementById('certLevelHeader').textContent = level.header;
-  document.getElementById('certLevelBody').textContent   = level.body;
+  document.getElementById('certLevelHeader').textContent = pick(level.headerList);
+  document.getElementById('certLevelBody').textContent   = pick(level.bodyList);
   document.getElementById('certScore').textContent       = level.score + '%';
 
   const ul = document.getElementById('certSymptoms');
