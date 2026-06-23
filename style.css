@@ -208,10 +208,11 @@ body {
 .btn {
   display: inline-block;
   font-family: var(--font);
-  font-size: 14px;
+  font-size: 15px;
   font-weight: 600;
-  padding: 11px 20px;
+  padding: 14px 20px;
   border: 1.5px solid transparent;
+  border-radius: 12px;
   cursor: pointer;
   transition: all 0.15s;
   flex: 1;
@@ -306,7 +307,7 @@ body {
 }
 
 .modal-label {
-  font-size: 12px;
+  font-size: 13px;
   font-weight: 600;
   color: var(--fg);
   text-align: center;
@@ -398,14 +399,14 @@ body {
 
 .form-clinic-en {
   font-family: var(--font-en);
-  font-size: 11px;
+  font-size: 13px;
   font-weight: 700;
   letter-spacing: 2px;
   color: var(--ink);
 }
 
 .form-clinic-th {
-  font-size: 11px;
+  font-size: 12px;
   opacity: 0.55;
   margin-top: 2px;
 }
@@ -429,7 +430,7 @@ body {
   display: flex;
   justify-content: space-between;
   font-family: var(--font-en);
-  font-size: 9px;
+  font-size: 11px;
   letter-spacing: 1px;
   opacity: 0.55;
   border-bottom: 1px solid rgba(0,0,0,0.1);
@@ -490,7 +491,7 @@ body {
 
 .photo-hint-text {
   font-family: var(--font-en);
-  font-size: 10px;
+  font-size: 12px;
   letter-spacing: 1px;
   text-align: center;
   opacity: 0.35;
@@ -521,10 +522,10 @@ body {
   display: flex;
   align-items: center;
   justify-content: center;
-  gap: 5px;
-  padding: 9px 12px;
+  gap: 6px;
+  padding: 13px 12px;
   font-family: var(--font);
-  font-size: 12px;
+  font-size: 14px;
   font-weight: 500;
   color: rgba(0,0,0,0.5);
   background: rgba(0,0,0,0.03);
@@ -553,7 +554,7 @@ body {
 .intake-info-row {
   display: flex;
   align-items: center;
-  padding: 8px 12px;
+  padding: 13px 12px;
   border-bottom: 1px solid rgba(0,0,0,0.07);
   gap: 12px;
 }
@@ -561,7 +562,7 @@ body {
 
 .intake-info-label {
   font-family: var(--font-en);
-  font-size: 9px;
+  font-size: 11px;
   letter-spacing: 1.5px;
   text-transform: uppercase;
   opacity: 0.62;
@@ -570,7 +571,7 @@ body {
 }
 
 .intake-info-value {
-  font-size: 13px;
+  font-size: 15px;
   font-weight: 500;
   color: var(--ink);
 }
@@ -580,7 +581,7 @@ body {
   border: none;
   background: transparent;
   font-family: var(--font-en);
-  font-size: 12px;
+  font-size: 16px;
   color: var(--ink);
   outline: none;
   padding: 0;
@@ -590,13 +591,13 @@ body {
   opacity: 0.25;
   font-style: italic;
   font-family: var(--font);
-  font-size: 12px;
+  font-size: 15px;
   letter-spacing: 0;
 }
 
 /* Section divider */
 .form-section-divider {
-  font-size: 9px;
+  font-size: 10px;
   letter-spacing: 3px;
   text-transform: uppercase;
   opacity: 0.45;
@@ -614,10 +615,10 @@ body {
 
 .field-label {
   display: block;
-  font-size: 11px;
+  font-size: 13px;
   font-weight: 600;
   letter-spacing: 0.5px;
-  margin-bottom: 6px;
+  margin-bottom: 8px;
 }
 
 .field-unit {
@@ -628,9 +629,11 @@ body {
 .form-select {
   width: 100%;
   font-family: var(--font);
-  font-size: 14px;
-  padding: 9px 10px;
-  background: rgba(0,0,0,0.03);
+  font-size: 16px;
+  padding: 14px 12px;
+  min-height: 50px;
+  border-radius: 8px 8px 0 0;
+  background-color: rgba(0,0,0,0.03);
   border: none;
   border-bottom: 2px solid rgba(0,0,0,0.2);
   color: var(--ink);
@@ -639,16 +642,18 @@ body {
   appearance: none;
   background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8' viewBox='0 0 12 8'%3E%3Cpath d='M1 1l5 5 5-5' stroke='%23111' stroke-width='1.5' fill='none'/%3E%3C/svg%3E");
   background-repeat: no-repeat;
-  background-position: right 10px center;
-  padding-right: 30px;
+  background-position: right 14px center;
+  padding-right: 38px;
 }
 .form-select:focus { border-bottom-color: var(--ink); }
 
 .form-textarea {
   width: 100%;
   font-family: var(--font);
-  font-size: 13px;
-  padding: 10px;
+  font-size: 16px;
+  padding: 12px;
+  min-height: 84px;
+  border-radius: 8px 8px 0 0;
   background: rgba(0,0,0,0.03);
   border: none;
   border-bottom: 2px solid rgba(0,0,0,0.2);
@@ -657,7 +662,7 @@ body {
   outline: none;
   line-height: 1.6;
 }
-.form-textarea::placeholder { opacity: 0.38; font-size: 12px; }
+.form-textarea::placeholder { opacity: 0.38; font-size: 14px; }
 .form-textarea:focus { border-bottom-color: var(--ink); }
 
 /* Submit button */
@@ -700,8 +705,8 @@ body {
 
 .form-footnote {
   text-align: center;
-  font-size: 10px;
-  opacity: 0.3;
+  font-size: 12px;
+  opacity: 0.4;
   font-style: italic;
 }
 

@@ -912,32 +912,44 @@ document.getElementById('savePngBtn').addEventListener('click', async () => {
 
     const blob = await new Promise(r => certCanvas.toBlob(r, 'image/png'));
     const filename = `burn-young-bro-${Date.now()}.png`;
-    const isIOS = /iPhone|iPad|iPod/i.test(navigator.userAgent) ||
+    const ua = navigator.userAgent;
+    const isIOS = /iPhone|iPad|iPod/i.test(ua) ||
                   (navigator.platform === 'MacIntel' && navigator.maxTouchPoints > 1);
+    const isMobile = isIOS || /Android/i.test(ua) ||
+                     (window.matchMedia && window.matchMedia('(pointer: coarse)').matches);
 
-    // Try Web Share API (mobile share sheet — best path when the gesture survives)
-    const file = new File([blob], filename, { type: 'image/png' });
-    if (navigator.canShare && navigator.canShare({ files: [file] })) {
-      try {
-        await navigator.share({ files: [file], title: 'Burn Young Bro Clinic' });
-        return;
-      } catch (shareErr) {
-        if (shareErr.name === 'AbortError') return; // user dismissed share sheet — that's fine
-        // share failed (gesture expired etc.) → fall through to manual save
-      }
-    }
-
-    if (isIOS) {
-      // iOS Safari ignores link.download — show the image so the user can long-press → "บันทึกรูปภาพ"
-      showSaveOverlay(certCanvas.toDataURL('image/png'));
-    } else {
-      // Desktop: real download
+    const downloadBlob = () => {
       const url = URL.createObjectURL(blob);
       const link = document.createElement('a');
       link.download = filename;
       link.href = url;
       link.click();
       setTimeout(() => URL.revokeObjectURL(url), 1000);
+    };
+
+    if (!isMobile) {
+      // Desktop: link.download works reliably — just download, no share sheet
+      downloadBlob();
+      return;
+    }
+
+    // Mobile: share sheet first (lets user Save to Photos / send to IG-Line)
+    const file = new File([blob], filename, { type: 'image/png' });
+    if (navigator.canShare && navigator.canShare({ files: [file] })) {
+      try {
+        await navigator.share({ files: [file], title: 'Burn Young Bro Clinic' });
+        return;
+      } catch (shareErr) {
+        if (shareErr.name === 'AbortError') return; // user dismissed — fine
+        // gesture expired etc. → fall through to manual save
+      }
+    }
+
+    if (isIOS) {
+      // iOS Safari ignores link.download — long-press the image to save
+      showSaveOverlay(certCanvas.toDataURL('image/png'));
+    } else {
+      downloadBlob(); // Android fallback
     }
   } catch (err) {
     console.error(err);
@@ -947,9 +959,6 @@ document.getElementById('savePngBtn').addEventListener('click', async () => {
     btn.disabled = false;
   }
 });
-
-// ===== PRINT =====
-document.getElementById('printBtn').addEventListener('click', () => window.print());
 
 // ===== REDO =====
 document.getElementById('redoBtn').addEventListener('click', () => {
