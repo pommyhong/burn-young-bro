@@ -856,6 +856,28 @@ function showResult(level, meetingCount, notes = '') {
   }, 2800);
 }
 
+// ===== iOS SAVE OVERLAY (long-press to save) =====
+function showSaveOverlay(dataUrl) {
+  let ov = document.getElementById('saveOverlay');
+  if (!ov) {
+    ov = document.createElement('div');
+    ov.id = 'saveOverlay';
+    ov.className = 'save-overlay';
+    ov.innerHTML =
+      '<div class="save-overlay-inner">' +
+        '<p class="save-overlay-hint">📲 กดค้างที่รูป แล้วเลือก <b>"บันทึกรูปภาพ"</b></p>' +
+        '<img class="save-overlay-img" alt="ใบรับรอง" />' +
+        '<button class="btn btn-outline" id="saveOverlayClose">ปิด</button>' +
+      '</div>';
+    document.body.appendChild(ov);
+    const close = () => ov.classList.add('hidden');
+    ov.addEventListener('click', e => { if (e.target === ov) close(); });
+    ov.querySelector('#saveOverlayClose').addEventListener('click', close);
+  }
+  ov.querySelector('.save-overlay-img').src = dataUrl;
+  ov.classList.remove('hidden');
+}
+
 // ===== SAVE PNG (IG Story 9:16) =====
 document.getElementById('savePngBtn').addEventListener('click', async () => {
   const btn = document.getElementById('savePngBtn');
@@ -890,8 +912,10 @@ document.getElementById('savePngBtn').addEventListener('click', async () => {
 
     const blob = await new Promise(r => certCanvas.toBlob(r, 'image/png'));
     const filename = `burn-young-bro-${Date.now()}.png`;
+    const isIOS = /iPhone|iPad|iPod/i.test(navigator.userAgent) ||
+                  (navigator.platform === 'MacIntel' && navigator.maxTouchPoints > 1);
 
-    // Try Web Share API (mobile share sheet)
+    // Try Web Share API (mobile share sheet — best path when the gesture survives)
     const file = new File([blob], filename, { type: 'image/png' });
     if (navigator.canShare && navigator.canShare({ files: [file] })) {
       try {
@@ -899,17 +923,22 @@ document.getElementById('savePngBtn').addEventListener('click', async () => {
         return;
       } catch (shareErr) {
         if (shareErr.name === 'AbortError') return; // user dismissed share sheet — that's fine
-        // share failed for other reason → fall through to download
+        // share failed (gesture expired etc.) → fall through to manual save
       }
     }
 
-    // Fallback: download link
-    const url = URL.createObjectURL(blob);
-    const link = document.createElement('a');
-    link.download = filename;
-    link.href = url;
-    link.click();
-    setTimeout(() => URL.revokeObjectURL(url), 1000);
+    if (isIOS) {
+      // iOS Safari ignores link.download — show the image so the user can long-press → "บันทึกรูปภาพ"
+      showSaveOverlay(certCanvas.toDataURL('image/png'));
+    } else {
+      // Desktop: real download
+      const url = URL.createObjectURL(blob);
+      const link = document.createElement('a');
+      link.download = filename;
+      link.href = url;
+      link.click();
+      setTimeout(() => URL.revokeObjectURL(url), 1000);
+    }
   } catch (err) {
     console.error(err);
     alert('ไม่สามารถบันทึกรูปได้\nลองกดพิมพ์แทนได้เลย');
