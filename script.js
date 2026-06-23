@@ -15,8 +15,19 @@ const LEVELS = [
       "ยิ้มทุกคน แต่ข้างในไม่โอเคเลยแม้แต่นิดเดียว",
       "หยิบโทรศัพท์ขึ้นมาดูซ้ำๆ โดยไม่มีจุดประสงค์",
       "พูดว่า 'เดี๋ยวทำ' มาสามอาทิตย์แล้ว ยังไม่ได้ทำ",
+      "เปิด email อ่านหัวเรื่องแล้ว mark อ่านแล้วโดยไม่เปิด",
+      "ประชุมจบถามตัวเองว่า 'เมื่อกี้คุยเรื่องอะไร' ไม่รู้จริงๆ",
+      "ทำ to-do list เสร็จแล้วภูมิใจ แต่ไม่ได้ทำอะไรในนั้นเลย",
+      "scroll ซ้ำๆ 40 นาทีโดยไม่หัวเราะสักครั้ง",
+      "ส่ง 'โอเคค่ะ' ไปแล้วแต่ยังไม่รู้ว่าโอเคอะไร",
+      "เปิด Figma แล้วนั่งเฉยๆ 15 นาที แล้วก็ปิด",
+      "ดื่มน้ำแก้วเดิมตั้งแต่เช้า ยังเหลืออยู่ครึ่งแก้ว",
     ],
-    rx: "นอนก่อนตี 2 ติดกัน 3 คืน — ไม่ต้องทำอะไรเพิ่ม",
+    rxList: [
+      "นอนก่อนตี 2 ติดกัน 3 คืน — ไม่ต้องทำอะไรเพิ่ม",
+      "เลิกตอบ Slack หลัง 6 โมงสักอาทิตย์ดู",
+      "พักกลางวัน 20 นาทีโดยไม่จับโทรศัพท์",
+    ],
   },
   {
     en: "SPIRITUALLY OFFLINE",
@@ -28,8 +39,19 @@ const LEVELS = [
       "กาแฟแก้วที่สามแต่ยังง่วง — ร่างกายยอมแพ้แล้ว",
       "วางแผนพักผ่อนทุกคืน แต่ตี 2 ยังตาค้างจ้องเพดาน",
       "มีคนทักมา เห็นแล้วเลื่อนผ่าน ตอบทีหลัง (ไม่ได้ตอบ)",
+      "ตอบ 'งานเยอะมาก' ทุกครั้งที่มีคนถาม แม้แต่ตอนวันหยุด",
+      "ลืมกินข้าวกลางวันเพราะประชุม แต่ก็ไม่หิว",
+      "เปิด Netflix เลือกซีรีส์อยู่ 40 นาที แล้วปิดไปนอน",
+      "ตั้งนาฬิกาปลุก 6 ครั้ง ตั้งแต่ 06:00 ถึง 07:30",
+      "อ่านข้อความเดิม 3 รอบแต่ยังตอบไม่ออก",
+      "ซื้อของเข้าบ้านเยอะขึ้นโดยไม่รู้ว่าอยากได้อะไรจริงๆ",
+      "browser tab เปิดร้านอาหารไว้ทั้งวันแต่ไม่ได้ไปไหน",
     ],
-    rx: "ลาหยุด 1 วัน โดยไม่รู้สึกผิด — สำคัญมาก",
+    rxList: [
+      "ลาหยุด 1 วัน โดยไม่รู้สึกผิด — สำคัญมาก",
+      "บอกใครสักคนว่าไม่โอเค แค่นั้นพอ ไม่ต้องอธิบาย",
+      "นอนก่อน 23:00 แค่คืนเดียวก่อน",
+    ],
   },
   {
     en: "EMOTIONALLY UNAVAILABLE",
@@ -41,8 +63,19 @@ const LEVELS = [
       "นึกไม่ออกแล้วว่า hobby ของตัวเองคืออะไร",
       "เปิดหน้าจอไว้ 47 แท็บ ไม่มีแท็บไหนที่กำลังจะดูจริงๆ",
       "อยู่บ้านก็อยากออก ออกไปแล้วก็อยากกลับ ไม่รู้ว่าอยากอะไร",
+      "มีคนถามว่าเป็นยังไงบ้าง ตอบ 'โอเค' ทั้งที่ไม่โอเคเลย",
+      "ดูหนังจบแล้วไม่รู้สึกอะไร ทั้งที่ดูมาสองชั่วโมง",
+      "ส่งสติกเกอร์ยิ้มเพราะไม่รู้จะพูดอะไรดี",
+      "เดินไปครัวแล้วลืมว่าจะทำอะไร กลับมานั่งเฉยๆ",
+      "ได้ยินเพลงที่เคยชอบแล้วไม่รู้สึกอะไรเลย",
+      "งานเสร็จแต่ไม่ภูมิใจ แค่โล่งที่มันจบ",
+      "เวลาว่างแล้วไม่รู้จะทำอะไร เลยกลับไปทำงานต่อ",
     ],
-    rx: "หยุดดูหน้าจอสักชั่วโมง — ยากมาก เราก็รู้",
+    rxList: [
+      "หยุดดูหน้าจอสักชั่วโมง — ยากมาก เราก็รู้",
+      "ออกไปนั่งข้างนอกโดยไม่เอาโทรศัพท์ไป 30 นาที",
+      "โทรหาคนที่คุยสบาย ไม่ต้องมีประเด็น",
+    ],
   },
   {
     en: "PLEASE DO NOT CONTACT",
@@ -54,8 +87,19 @@ const LEVELS = [
       "ฝันเห็นนาฬิกาปลุกแล้วรู้สึกเศร้า",
       "เห็นคนอื่นตื่นเต้นกับชีวิตแล้วงงว่าทำยังไง",
       "นึกไม่ออกว่าครั้งสุดท้ายที่รู้สึกโอเคจริงๆ คือเมื่อไหร่",
+      "พิมพ์ข้อความยาวมากแล้วลบทิ้ง ส่งแค่ว่า 'โอเค'",
+      "อยากบอกว่าไม่ไหวแล้ว แต่ก็ยังรับงานต่อ",
+      "โทรศัพท์ดัง เห็นชื่อแล้ววางทิ้งไว้ก่อน",
+      "เห็น notification 47 อัน ปิดหน้าจอแล้วไปต่อ",
+      "calendar เต็มอีก 3 อาทิตย์ข้างหน้า แต่ก็รับ invite ต่อ",
+      "นอนแล้วคิดเรื่องงาน ตื่นมาก็คิดต่อ ไม่รู้จะหยุดตอนไหน",
+      "ยิ้มในประชุมทั้งวัน กลับบ้านแล้วนั่งเงียบๆ ไม่อยากพูด",
     ],
-    rx: "บอกลาออฟฟิศสักสัปดาห์ อย่าเปิดอะไรทั้งนั้น",
+    rxList: [
+      "บอกลาออฟฟิศสักสัปดาห์ อย่าเปิดอะไรทั้งนั้น",
+      "ปิด notification ทุกอย่างแค่วันเสาร์วันเดียวก่อน",
+      "ยกเลิก meeting ที่ไม่จำเป็นสัก 1 อัน — แค่อันเดียวก็ยังดี",
+    ],
   },
   {
     en: "HAS LEFT THE CHAT",
@@ -67,17 +111,33 @@ const LEVELS = [
       "ไม่อยากทำอะไรทั้งนั้น รวมถึงสิ่งที่เคยชอบ",
       "มีแผนหนีไปอยู่ป่า เลี้ยงแกะ หรือเปลี่ยนชื่อ",
       "เข้าใจแล้วว่าทำไมคนถึงหายไปโดยไม่บอกใคร",
+      "respond ช้าลงเรื่อยๆ จนคนหยุดทักเอง",
+      "เห็น task ใหม่แล้วรู้สึกเหมือน load เต็ม ทำอะไรไม่ได้",
+      "อยากได้ป่วยเพื่อจะได้พักโดยไม่รู้สึกผิด",
+      "วันหยุดก็ไม่หาย วันทำงานก็เหนื่อย ไม่รู้ความต่างแล้ว",
+      "เปิดเพลงเพื่อไม่ให้ห้องเงียบเกินไป ไม่ได้ฟังจริงๆ",
+      "มองหน้าต่างแล้วนึกถึงที่ที่ไม่มีอีเมล",
+      "คนถามว่า 'วันนี้เป็นยังไง' ตอบไม่ออกจริงๆ ไม่ใช่ไม่อยากพูด",
     ],
-    rx: "Witness protection program — ติดต่อได้ที่ไหนก็ไม่รู้",
+    rxList: [
+      "Witness protection program — ติดต่อได้ที่ไหนก็ไม่รู้",
+      "ลาพักร้อนทุกวันที่มี แล้วอย่าเปิด laptop เลย",
+      "บอกหัวหน้าตรงๆ ว่าต้องการ support — ถึงเวลาแล้ว",
+    ],
   },
 ];
 
 const DOCTORS = [
-  { name: "หมอกิตติ สิงหาคม",    title: "อายุรแพทย์" },
-  { name: "หมอนุ้ย ลาก่อนนะ",   title: "จิตแพทย์" },
-  { name: "หมอบิ๊ก แวะมาดู",    title: "แพทย์ทั่วไป" },
-  { name: "พญ.ติ๊ก ทนดูอยู่",   title: "ที่ปรึกษา" },
-  { name: "หมอต้น พักก่อนเด้อ", title: "แพทย์" },
+  { name: "หมอกิตติ สิงหาคม",           title: "อายุรแพทย์" },
+  { name: "หมอนุ้ย ลาก่อนนะ",          title: "จิตแพทย์" },
+  { name: "หมอบิ๊ก แวะมาดู",           title: "แพทย์ทั่วไป" },
+  { name: "พญ.ติ๊ก ทนดูอยู่",          title: "ที่ปรึกษา" },
+  { name: "หมอต้น พักก่อนเด้อ",        title: "แพทย์" },
+  { name: "นพ.เอ็ม ไม่ไหวแล้วเหมือนกัน", title: "แพทย์อาสา" },
+  { name: "พญ.กิ๊ฟ ขอลาออกก่อนนะ",    title: "จิตเวชฉุกเฉิน" },
+  { name: "หมอโอ๊ต ก็เครียดอยู่เหมือนกัน", title: "ผู้เชี่ยวชาญ" },
+  { name: "นพ.ปอนด์ อย่าถามว่าหมอเป็นยังไง", title: "ประสาทวิทยา" },
+  { name: "พญ.ใหม่ เหนื่อยด้วยกันทั้งคู่", title: "แพทย์เวร" },
 ];
 
 function getMeetingSymptom(count) {
@@ -377,23 +437,24 @@ function runAnalysis(meetingCount, notes) {
 
   setTimeout(() => {
     const level = pickLevel(meetingCount);
-    showResult(level, meetingCount);
+    showResult(level, meetingCount, notes);
   }, 4200);
 }
 
 // ===== PICK LEVEL =====
 function pickLevel(meetingCount) {
-  const base = LEVELS[Math.floor(Math.random() * LEVELS.length)];
-  const [min, max] = base.range;
-  // More meetings = higher score
-  const meetingBonus = Math.min((meetingCount - 1) * 2, 16);
-  const raw = Math.floor(Math.random() * (max - min + 1)) + min + meetingBonus;
-  const score = Math.min(raw, 98);
-  return { ...base, score, meetingCount };
+  // Bias toward higher levels with more meetings (0 meetings = low · 8+ = high)
+  const meetingFactor = Math.min((meetingCount - 1) / 7, 1);
+  const rand = Math.random() * (1 - meetingFactor * 0.5) + meetingFactor * 0.5;
+  const idx = Math.min(Math.floor(rand * LEVELS.length), LEVELS.length - 1);
+  const level = LEVELS[idx];
+  const [min, max] = level.range;
+  const score = Math.floor(Math.random() * (max - min + 1)) + min;
+  return { ...level, score };
 }
 
 // ===== SHOW RESULT =====
-function showResult(level, meetingCount) {
+function showResult(level, meetingCount, notes = '') {
   typingActive = false;
   // Fill cert data first (while hidden)
   const certPhoto = document.getElementById('certPhoto');
@@ -413,10 +474,13 @@ function showResult(level, meetingCount) {
 
   const ul = document.getElementById('certSymptoms');
   ul.innerHTML = '';
-  [...level.symptoms, getMeetingSymptom(meetingCount)].forEach(s => {
+  const shuffled = [...level.symptoms].sort(() => Math.random() - 0.5).slice(0, 3);
+  const extraSymptoms = notes ? [notes] : [];
+  [...shuffled, getMeetingSymptom(meetingCount), ...extraSymptoms].forEach(s => {
     const li = document.createElement('li'); li.textContent = s; ul.appendChild(li);
   });
-  document.getElementById('certRx').textContent          = level.rx;
+  const rx = level.rxList[Math.floor(Math.random() * level.rxList.length)];
+  document.getElementById('certRx').textContent          = rx;
   document.getElementById('certDoctorName').textContent  = currentDoctor.name;
   document.getElementById('certDoctorTitle').textContent = currentDoctor.title;
 
@@ -468,19 +532,28 @@ document.getElementById('savePngBtn').addEventListener('click', async () => {
     wrap.style.animation = '';
     if (doctorRow) doctorRow.style.display = '';
 
-    const dataUrl = certCanvas.toDataURL('image/png');
-    const isIOS = /iPhone|iPad|iPod/i.test(navigator.userAgent);
-    if (isIOS) {
-      // iOS Safari doesn't support link.download — open in new tab, user long-press to save
-      const w = window.open();
-      w.document.write(`<img src="${dataUrl}" style="max-width:100%;display:block">`);
-      w.document.title = 'burn-young-bro';
-    } else {
-      const link = document.createElement('a');
-      link.download = `burn-young-bro-story-${Date.now()}.png`;
-      link.href = dataUrl;
-      link.click();
+    const blob = await new Promise(r => certCanvas.toBlob(r, 'image/png'));
+    const filename = `burn-young-bro-${Date.now()}.png`;
+
+    // Try Web Share API (mobile share sheet)
+    const file = new File([blob], filename, { type: 'image/png' });
+    if (navigator.canShare && navigator.canShare({ files: [file] })) {
+      try {
+        await navigator.share({ files: [file], title: 'Burn Young Bro Clinic' });
+        return;
+      } catch (shareErr) {
+        if (shareErr.name === 'AbortError') return; // user dismissed share sheet — that's fine
+        // share failed for other reason → fall through to download
+      }
     }
+
+    // Fallback: download link
+    const url = URL.createObjectURL(blob);
+    const link = document.createElement('a');
+    link.download = filename;
+    link.href = url;
+    link.click();
+    setTimeout(() => URL.revokeObjectURL(url), 1000);
   } catch (err) {
     console.error(err);
     alert('ไม่สามารถบันทึกรูปได้\nลองกดพิมพ์แทนได้เลย');
@@ -495,7 +568,6 @@ document.getElementById('printBtn').addEventListener('click', () => window.print
 
 // ===== REDO =====
 document.getElementById('redoBtn').addEventListener('click', () => {
-  photoDataUrl = null;
   photoDataUrl = null; photoFile = null;
   photoInput.value = '';
   const fp = document.getElementById('formPhoto');
