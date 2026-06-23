@@ -636,24 +636,64 @@ function playCarriageReturn() {
 function playPrintFeed(durationSec) {
   try {
     const ctx = getAudioCtx();
-    const sr = ctx.sampleRate;
+    const sr  = ctx.sampleRate;
     const len = Math.floor(sr * durationSec);
     const buf = ctx.createBuffer(1, len, sr);
     const d   = buf.getChannelData(0);
-    // Rhythmic paper-roller noise (~7Hz step cadence)
+
+    // Dot-matrix printer: head sweeps line by line · grainy buzz · carriage step between lines
+    const lineDur = 0.20;            // time printing one line
+    const gapDur  = 0.07;            // carriage-return step between lines
+    const period  = lineDur + gapDur;
+
     for (let i = 0; i < len; i++) {
-      const t   = i / sr;
-      const env = 0.55 + 0.45 * Math.sin(2 * Math.PI * 7 * t);
-      d[i] = (Math.random() * 2 - 1) * 0.024 * env;
+      const t    = i / sr;
+      const ph   = t % period;       // position within current line cycle
+      const line = Math.floor(t / period);
+      let s = 0;
+
+      if (ph < lineDur) {
+        // Head warble — pitch sweeps as the print head crosses the page
+        const sweep = 470 + 150 * Math.sin(2 * Math.PI * (ph / lineDur) - Math.PI / 2)
+                          + (line % 2 ? 40 : -40);          // alt lines slightly detuned
+        // Square-ish carrier (mechanical timbre = odd harmonics)
+        const carrier = Math.sin(2 * Math.PI * sweep * t)
+                      + 0.5  * Math.sin(2 * Math.PI * sweep * 3 * t)
+                      + 0.25 * Math.sin(2 * Math.PI * sweep * 5 * t);
+        const grain  = 0.55 + 0.45 * Math.sign(Math.sin(2 * Math.PI * 34 * t)); // 34Hz pulse texture
+        const edge   = Math.min(ph, lineDur - ph) * 40;     // fade in/out each line edge
+        const lineEnv = Math.min(edge, 1);
+        s += carrier * grain * 0.05 * lineEnv;
+        s += (Math.random() * 2 - 1) * 0.018 * lineEnv;      // ink-paper hiss
+      } else {
+        // Carriage step click at the start of the gap
+        const c = ph - lineDur;
+        s += (Math.random() * 2 - 1) * 0.16 * Math.exp(-c / 0.006);
+      }
+      d[i] = s;
     }
+
     const src = ctx.createBufferSource(); src.buffer = buf;
-    const lp  = ctx.createBiquadFilter(); lp.type = 'lowpass'; lp.frequency.value = 700;
+    const bp  = ctx.createBiquadFilter(); bp.type = 'bandpass'; bp.frequency.value = 1100; bp.Q.value = 0.7;
     const g   = ctx.createGain();
-    g.gain.setValueAtTime(0.75, ctx.currentTime);
-    g.gain.setValueAtTime(0.75, ctx.currentTime + durationSec - 0.5);
+    g.gain.setValueAtTime(0.85, ctx.currentTime);
+    g.gain.setValueAtTime(0.85, ctx.currentTime + durationSec - 0.4);
     g.gain.exponentialRampToValueAtTime(0.001, ctx.currentTime + durationSec);
-    src.connect(lp); lp.connect(g); g.connect(ctx.destination);
+    src.connect(bp); bp.connect(g); g.connect(ctx.destination);
     src.start(); src.stop(ctx.currentTime + durationSec);
+
+    // Satisfying "ding" when the print job completes
+    const dingAt = ctx.currentTime + durationSec - 0.05;
+    [880, 1320].forEach((freq, k) => {
+      const osc = ctx.createOscillator();
+      const dg  = ctx.createGain();
+      osc.type = 'triangle'; osc.frequency.value = freq;
+      dg.gain.setValueAtTime(0, dingAt);
+      dg.gain.linearRampToValueAtTime(k ? 0.05 : 0.09, dingAt + 0.01);
+      dg.gain.exponentialRampToValueAtTime(0.0008, dingAt + 0.55);
+      osc.connect(dg); dg.connect(ctx.destination);
+      osc.start(dingAt); osc.stop(dingAt + 0.6);
+    });
   } catch(e) {}
 }
 
