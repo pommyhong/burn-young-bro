@@ -537,8 +537,17 @@ let cameraFacing = 'user'; // 'user' = front (mirror) · 'environment' = back
 
 async function startCamera() {
   if (cameraStream) { cameraStream.getTracks().forEach(t => t.stop()); cameraStream = null; }
+  const getCam = c => navigator.mediaDevices.getUserMedia({ video: c });
   try {
-    cameraStream = await navigator.mediaDevices.getUserMedia({ video: { facingMode: cameraFacing } });
+    let stream;
+    try {
+      // exact forces a real switch on phones that have both cameras
+      stream = await getCam({ facingMode: { exact: cameraFacing } });
+    } catch {
+      // fallback: single-camera devices (e.g. desktop) — keep whatever cam exists
+      stream = await getCam({ facingMode: cameraFacing });
+    }
+    cameraStream = stream;
     cameraFeed.srcObject = cameraStream;
     cameraFeed.classList.toggle('back', cameraFacing === 'environment');
     cameraModal.classList.remove('hidden');
@@ -547,7 +556,7 @@ async function startCamera() {
   }
 }
 
-cameraBtn.addEventListener('click', startCamera);
+cameraBtn.addEventListener('click', () => { cameraFacing = 'user'; startCamera(); });
 
 flipCameraBtn.addEventListener('click', () => {
   cameraFacing = cameraFacing === 'user' ? 'environment' : 'user';

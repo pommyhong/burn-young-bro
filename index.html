@@ -115,10 +115,12 @@
     <div id="cameraModal" class="modal hidden">
       <div class="modal-box">
         <p class="modal-label">วางหน้าในกรอบ</p>
-        <video id="cameraFeed" autoplay playsinline></video>
+        <div class="camera-frame">
+          <video id="cameraFeed" autoplay playsinline></video>
+          <button class="camera-flip-icon" id="flipCameraBtn" type="button" aria-label="สลับกล้อง" title="สลับกล้อง">🔄</button>
+        </div>
         <div class="camera-actions">
           <button class="btn btn-dark" id="snapBtn">ถ่ายรูป</button>
-          <button class="btn btn-outline" id="flipCameraBtn" type="button">🔄 สลับกล้อง</button>
           <button class="btn btn-outline" id="cancelCameraBtn">ยกเลิก</button>
         </div>
         <canvas id="snapCanvas" hidden></canvas>
